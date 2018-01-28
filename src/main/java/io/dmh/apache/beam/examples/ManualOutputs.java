@@ -26,7 +26,7 @@ public class ManualOutputs {
         @ProcessElement
         public void processElement(ProcessContext c) {
             if (c.element().startsWith(this.arg)) {
-                c.output(c.element().toString());
+                c.output(c.element());
             }
         }
 
@@ -66,6 +66,7 @@ public class ManualOutputs {
         PCollection<String> lines = pipeline.apply("ReadLines",
                 TextIO.read().from(options.getInputFile()));
 
+        // Here we define an array of the various log levels we're interested in, we then loop through each of them.
         final String[] logLevels = new String[] { "DEBUG", "INFO", "WARNING",
                 "ERROR", "CRITICAL" };
         for (String logLevel : logLevels) {
