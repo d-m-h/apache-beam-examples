@@ -32,6 +32,9 @@ public class ManualOutputs {
 
     }
 
+    /**
+     * Custom pipeline options
+     */
     interface CustomPipelineOptions extends PipelineOptions {
 
         /**
@@ -63,12 +66,10 @@ public class ManualOutputs {
         Pipeline pipeline = Pipeline.create(options);
 
         // Read the data in
-        PCollection<String> lines = pipeline.apply("ReadLines",
-                TextIO.read().from(options.getInputFile()));
+        PCollection<String> lines = pipeline.apply("ReadLines", TextIO.read().from(options.getInputFile()));
 
         // Here we define an array of the various log levels we're interested in, we then loop through each of them.
-        final String[] logLevels = new String[] { "DEBUG", "INFO", "WARNING",
-                "ERROR", "CRITICAL" };
+        final String[] logLevels = new String[] { "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" };
         for (String logLevel : logLevels) {
             PCollection<String> collection = lines.apply(
                     String.format("Filter%sLines", logLevel), ParDo.of(
