@@ -26,12 +26,15 @@ public class ManualOutputs {
         @ProcessElement
         public void processElement(ProcessContext c) {
             if (c.element().startsWith(this.arg)) {
-                c.output(c.element().toString());
+                c.output(c.element());
             }
         }
 
     }
 
+    /**
+     * Custom pipeline options
+     */
     interface CustomPipelineOptions extends PipelineOptions {
 
         /**
@@ -63,17 +66,16 @@ public class ManualOutputs {
         Pipeline pipeline = Pipeline.create(options);
 
         // Read the data in
-        PCollection<String> lines = pipeline.apply("ReadLines",
-                TextIO.read().from(options.getInputFile()));
+        PCollection<String> lines = pipeline.apply("ReadLines", TextIO.read().from(options.getInputFile()));
 
-        final String[] logLevels = new String[] { "DEBUG", "INFO", "WARNING",
-                "ERROR", "CRITICAL" };
+        // Here we define an array of the various log levels we're interested in, we then loop through each of them.
+        final String[] logLevels = new String[] { "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" };
         for (String logLevel : logLevels) {
             PCollection<String> collection = lines.apply(
                     String.format("Filter%sLines", logLevel), ParDo.of(
                             new FilterLinesFn(logLevel)));
 
-            collection.apply(String.format(String.format("Write%s", logLevel)),
+            collection.apply(String.format("Write%s", logLevel),
                     TextIO.write().to(options.getOutput())
                             .withSuffix(String.format("-%s.txt", logLevel))
                             .withNumShards(1));
