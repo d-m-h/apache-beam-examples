@@ -74,7 +74,7 @@ public class ManualOutputs {
                     String.format("Filter%sLines", logLevel), ParDo.of(
                             new FilterLinesFn(logLevel)));
 
-            collection.apply(String.format(String.format("Write%s", logLevel)),
+            collection.apply(String.format("Write%s", logLevel),
                     TextIO.write().to(options.getOutput())
                             .withSuffix(String.format("-%s.txt", logLevel))
                             .withNumShards(1));
