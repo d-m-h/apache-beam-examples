@@ -16,5 +16,7 @@ and produce a number of files, associated with the log level. Right now this pip
 because what if we wanted to add, remove or change log levels?
 To run this pipeline, provide the following arguments:
 ```s
-$ mvn compile exec:java -Dexec.mainClass=io.dmh.apache.beam.examples.ManualOutputs "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/manual" -Pdirect-runner
+$ mvn compile exec:java -Dexec.mainClass=io.dmh.apache.beam.examples.ManualOutputs \
+  "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/manual" \
+  -Pdirect-runner
 ```
