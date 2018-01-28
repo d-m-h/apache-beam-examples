@@ -26,7 +26,7 @@ log level and the value is the log message. It then performs an explicit `GroupB
 The length of the iterable is obtained, and is equivalent to the count.
 ```
 $ mvn compile exec:java -Dexec.mainClass=io.dmh.apache.beam.examples.CountUsingIterable \
-  "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/manual" \
+  "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/count_by_iterable" \
   -Pdirect-runner
 ```
 
@@ -34,6 +34,6 @@ $ mvn compile exec:java -Dexec.mainClass=io.dmh.apache.beam.examples.CountUsingI
 saving us a step.
 ```
 $ mvn compile exec:java -Dexec.mainClass=io.dmh.apache.beam.examples.CountUsingCountPerKey \
-  "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/manual" \
+  "-Dexec.args=--inputFile=data/in/log_file.txt --output=data/out/count_by_key" \
   -Pdirect-runner
 ```
